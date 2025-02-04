@@ -1,9 +1,12 @@
 # Dependency directories
 node_modules/
+npm-debug.log
 
 # Optional npm cache directory
 .npm
 # dotenv environment variables file
 .env
 
+# MacOS
+.DS_Store
 
