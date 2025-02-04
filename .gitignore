@@ -1,9 +1,11 @@
 # Dependency directories
+backend/node_modules/
 frontend/node_modules/
 npm-debug.log
 
 # Optional npm cache directory
 .npm
+
 # dotenv environment variables file
 backend/.env
 
