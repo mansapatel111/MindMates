@@ -14,6 +14,10 @@ mongoose.connect(process.env.MONGO_URI, { //This connects the MongoDB databsase 
 }).then(() => console.log('MongoDB connected')) //If the connection is successful THEN log "MongoBD connected"
   .catch(err => console.log(err)); //If not then log the error in console
 
+// Import and use the auth routes
+const authRoutes = require('./routes/auth');
+app.use('/auth', authRoutes);
+
 app.get('/', (req, res) => { // app.get() defines a route that listens for GET requests, '/' means the route is the root, (req, res) is a call back func that handles the request
   // A route in Express determines how the server responds when a user visits a specific URL.
   res.send('Hello Amanda!');
