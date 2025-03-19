@@ -1,0 +1,2 @@
+**TEMPLATE FOR backend/.env**
+MONGO_URI=[ADD MONGODB URI]
