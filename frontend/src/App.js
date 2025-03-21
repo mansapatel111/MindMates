@@ -1,5 +1,5 @@
 import React, { useState } from 'react'; //Imports dependences
-
+import Chatbot from "./Chatbot";
 function App() { //This function defines the main React Component
 
  //useState() creates 2 things, [var1, setvar1] -> var1 is a state variable that stores the username, setvar1 -> a function that updates username
@@ -109,6 +109,7 @@ function App() { //This function defines the main React Component
         <button type="submit">Register</button>
       </form>
       {registerMessage && <h2>{registerMessage}</h2>}
+      <Chatbot />
     </div>
   );
 
