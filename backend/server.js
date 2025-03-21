@@ -2,6 +2,7 @@ const express = require('express'); //This is importing express
 const mongoose = require('mongoose'); //This is importing Mongoose library to help interact with MongoDB
 const cors = require('cors'); //CORS == Cross Origin Resource Sharing, allows frontend requests from different domains
 require('dotenv').config(); //This is loading in environmental variables
+const router = express.Router();
 
 const app = express(); //This creates an express application instance
 const PORT = process.env.PORT || 5001; //Defines the port for the server (5001) if PORT is defined in .env then it'll use that value otherwise use 5001 as a default
