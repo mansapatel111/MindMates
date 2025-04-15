@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import "../Chatbot.css";
 
@@ -14,34 +15,33 @@ const Chatbot = () => {
   const [responses, setResponses] = useState([]);
   const [chatFinished, setChatFinished] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [streak, setStreak] = useState(null); // 🔥 New: state for streak
+  const [streak, setStreak] = useState(0);
 
   const token = localStorage.getItem("token");
 
-  // Fetch previous responses from the backend
+ 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      window.location.href = '/login';
-      return;
-    }
-
-    const fetchResponses = async () => {
+    const fetchStreakData = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/getResponses/${userId}`, {
-          headers: { "Authorization": `Bearer ${token}` },
+        const response = await fetch("http://localhost:5001/chatbot/getResponses", {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+          
         });
         const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-          setResponses(data);
-          setCurrentQuestion(data.length);
+        
+        
+        if (data && data.streak !== undefined) {
+          setStreak(data.streak);
         }
       } catch (error) {
-        console.error("Error fetching past responses:", error);
+        console.error("Error fetching streak data:", error);
       }
     };
 
-    if (token) fetchResponses();
+    if (token) fetchStreakData();
   }, [token]);
 
   const handleNext = async () => {
@@ -55,32 +55,44 @@ const Chatbot = () => {
       } else {
         setChatFinished(true);
 
-        // Send respon to backend
-        const token = localStorage.getItem('token');
         try {
+         
           const res = await fetch("http://localhost:5001/chatbot/saveResponses", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json"
             },
-            body: JSON.stringify({ userId, responses: newResponses }),
+            body: JSON.stringify({ responses: newResponses }),
           });
 
           const data = await res.json();
-          console.log("Current streak:", data.streak);
-          setStreak(data.streak); // 🔥 Save streak to state
-
+          if (data && data.streak !== undefined) {
+            setStreak(data.streak);
+          }
         } catch (error) {
-          console.error("Error saving responses:", error);
+          console.error("Error saving completion:", error);
         }
       }
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && inputValue.trim()) {
+      handleNext();
+    }
+  };
+
   return (
     <div className="chatbot-container">
-      <h3 className="chatbot-title">~Mindfulness Chatbot~ </h3>
+      <h1 className="chatbot-title">Mindfulness Chatbot</h1>
+      
+      {streak > 0 && (
+        <div className="streak-display">
+          <p>🔥 Current streak: {streak} day{streak !== 1 ? "s" : ""}</p>
+        </div>
+      )}
+      
       <div className="chatbot-messages">
         {responses.map((response, index) => (
           <div key={index}>
@@ -102,17 +114,20 @@ const Chatbot = () => {
             placeholder="Type your answer..."
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
+            onKeyPress={handleKeyPress}
           />
-          <button className="chatbot-submit" onClick={handleNext}>Submit</button>
+          <button className="chatbot-submit" onClick={handleNext}>
+            Submit
+          </button>
         </div>
       )}
 
       {chatFinished && (
         <>
           <h2 className="chatbot-finished">Session complete! 🎉</h2>
-          {streak !== null && (
-            <p className="chatbot-streak">🔥 Your current streak is {streak} day{streak !== 1 ? "s" : ""}!</p>
-          )}
+          <p className="chatbot-streak">
+            🔥 Your current streak is {streak} day{streak !== 1 ? "s" : ""}!
+          </p>
         </>
       )}
     </div>
