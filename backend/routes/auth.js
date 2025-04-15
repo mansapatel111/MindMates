@@ -9,7 +9,8 @@ const router = express.Router();
 
 // User registration route
 router.post('/register', async (req, res) => { 
-    const { username, password } = req.body;
+    const { username, password, firstName, lastName } = req.body;
+    console.log('Received data:', { username, password, firstName, lastName });
     try {
         //Check if user already exists
         let existingUser = await User.findOne({ username });
@@ -19,8 +20,9 @@ router.post('/register', async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const user = new User({ username, password: hashedPassword });
+        const user = new User({ username, password: hashedPassword, firstName, lastName });
         await user.save();
+        console.log(req.body); //debug statement
 
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
