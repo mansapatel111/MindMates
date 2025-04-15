@@ -15,7 +15,7 @@ function AppContent() {
   };
 
   return (
-    <>
+    <div className ="App">
       <h1>Welcome to Mindmates!</h1>
       <nav>
         {!isLoggedIn ? (
@@ -35,7 +35,7 @@ function AppContent() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
-    </>
+  </div>
   );
 }
 
