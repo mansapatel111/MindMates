@@ -1,10 +1,13 @@
 import React, { useState } from 'react'; //Imports dependences
+import { useNavigate } from 'react-router-dom';
 
 function Login(){
+
 
     const [username, setUsername] = useState(''); //This is just initializes the variables to empty
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleLogin = async (event) => { //async functions allows us to write async code and use await
         event.preventDefault(); //This prevents the form from refreshing the page when submitted
@@ -19,7 +22,11 @@ function Login(){
     
           const data = await response.json(); //response comes from line 18, .json() converts it into a json like format
           if (response.ok) { //.ok checks if the response code is between 200-299, anythin else means error
-            setMessage(`Login successful! Token: ${data.token}`);
+            setMessage(`Login successful!`);
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('firstName', data.firstName);
+            localStorage.setItem('lastName', data.lastName);
+            navigate('/dashboard');
           } else {
             setMessage(data.message);
           }
