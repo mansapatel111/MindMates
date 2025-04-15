@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link, useNavigate} from "react-
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import "./App.css";
 
 function AppContent() {
   const isLoggedIn = localStorage.getItem("token");
@@ -14,7 +15,7 @@ function AppContent() {
   };
 
   return (
-    <>
+    <div className ="App">
       <h1>Welcome to Mindmates!</h1>
       <nav>
         {!isLoggedIn ? (
@@ -34,7 +35,7 @@ function AppContent() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
-    </>
+  </div>
   );
 }
 

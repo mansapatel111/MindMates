@@ -80,7 +80,7 @@ const Chatbot = () => {
 
   return (
     <div className="chatbot-container">
-      <h1 className="chatbot-title">Mindfulness Chatbot</h1>
+      <h3 className="chatbot-title">~Mindfulness Chatbot~ </h3>
       <div className="chatbot-messages">
         {responses.map((response, index) => (
           <div key={index}>
