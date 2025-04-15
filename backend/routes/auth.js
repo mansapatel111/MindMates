@@ -45,10 +45,14 @@ router.post("/login", async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials (USERNAME FOUND, WRONG PASSWORD" });
 
     // Generate JWT token using secret from .env
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign(
+      { userId: user._id, firstName: user.firstName, lastName: user.lastName },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
-    res.json({ token });
-  } catch (err) {
+    res.json({ token, firstName: user.firstName, lastName: user.lastName }); //this is sending the token to the front end
+    } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message});
   }
 });

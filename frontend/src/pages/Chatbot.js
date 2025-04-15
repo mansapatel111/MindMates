@@ -20,10 +20,16 @@ const Chatbot = () => {
 
   // Fetch previous responses from the backend
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/login';
+      return;
+    }
+
     const fetchResponses = async () => {
       try {
-        const response = await fetch("http://localhost:5001/chatbot/getResponses", {
-          headers: { Authorization: token },
+        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/getResponses/${userId}`, {
+          headers: { "Authorization": `Bearer ${token}` },
         });
         const data = await response.json();
         if (Array.isArray(data) && data.length > 0) {
@@ -49,14 +55,16 @@ const Chatbot = () => {
       } else {
         setChatFinished(true);
 
+        // Send respon to backend
+        const token = localStorage.getItem('token');
         try {
           const res = await fetch("http://localhost:5001/chatbot/saveResponses", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: token,
+              "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify({ responses: newResponses }),
+            body: JSON.stringify({ userId, responses: newResponses }),
           });
 
           const data = await res.json();
