@@ -24,7 +24,7 @@ function AppContent() {
           </>
         ) : (
           <>
-            <Link to="/dashboard">Dashboard</Link> |
+            {/* <Link to="/dashboard">Dashboard</Link> |  */}
             <button onClick={handleLogout}>Logout</button>
           </>
         )}
