@@ -1,18 +1,18 @@
-// routes/chatbot.js
+
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User.js');
-const auth = require('../../middleware/authenticateToken.js'); // Import your authentication middleware
+const auth = require('../../middleware/authenticateToken.js'); 
 
 
-// Apply authentication middleware to all routes
+
 router.use(auth);
 
 // Get user responses and streak information
 router.get('/getResponses', async (req, res) => {
   try {
     // Get user ID from authenticated request
-    const userId = req.userId;
+    const userId = req.user.userId;
     
     // Find user data
     const user = await User.findById(userId);
@@ -36,7 +36,7 @@ router.get('/getResponses', async (req, res) => {
 router.post('/saveResponses', async (req, res) => {
   try {
     // Get user ID from authenticated request
-    const userId = req.userId;
+    const userId = req.user.userId;
     
     // Get current date (reset time to midnight for comparison)
     const today = new Date();
