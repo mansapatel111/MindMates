@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authenticateToken = require('../middleware/authenteToken.js');
 
 const questions = [
   "What is one thing you're grateful for today?",
@@ -9,7 +10,7 @@ const questions = [
   "What is one act of kindness you can do today?"
 ];
 
-router.get("/:step", (req, res) => {
+router.get("/:step", authenticateToken,(req, res) => { //added authenticateToken to verify since protected route9
   const step = parseInt(req.params.step);
   if (step < questions.length) {
     res.json({ question: questions[step] });
