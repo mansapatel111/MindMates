@@ -4,7 +4,7 @@
     margin: auto;
     margin-top: 40px;
     padding: 20px;
-    background: #c6f7d2;
+    background: #edd5fd;
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   }
@@ -29,19 +29,27 @@
     border-radius: 10px;
     max-width: 80%;
     word-wrap: break-word;
+    display: inline-block;
   }
   
   /* Chatbot (right side) */
   .chatbot-question {
-    background: #d1e7ff;
-    align-self: flex-end;
-    text-align: right;
+    background: #302b63;
+    align-self: right;
+    text-align: left;
+    margin-left: auto;
+    float: right;
+    clear: both;
   }
   
   /* User response (left side) */
   .chatbot-answer {
-    background: #c8f7c5;
+    background: #0f0c29;
     align-self: flex-start;
+    text-align: left;
+    margin-right: auto;
+    float: left;
+    clear: both;
   }
   
   /* Input area */
@@ -56,10 +64,11 @@
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ddd;
+    background: #0f0c29;
   }
   
   .chatbot-submit {
-    background: green;
+    background: linear-gradient(90deg, #8a2be2, #4169e1, #00bfff);
     color: white;
     border: none;
     padding: 10px 15px;
@@ -69,7 +78,7 @@
   }
   
   .chatbot-submit:hover {
-    background: darkgreen;
+    background: #0f0c29;
   }
   
   .chatbot-finished {
