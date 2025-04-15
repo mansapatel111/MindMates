@@ -19,39 +19,42 @@ mongoose.connect(process.env.MONGO_URI, { //This connects the MongoDB databsase 
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
 
+const chatbotRoutes = require('./routes/chatbot');
+app.use('/chatbot', chatbotRoutes);
+
 // store responses in MongoDB
-const ResponseSchema = new mongoose.Schema({
-  responses: [String], 
-  date: { type: Date, default: Date.now },
-});
+// const ResponseSchema = new mongoose.Schema({
+//   responses: [String], 
+//   date: { type: Date, default: Date.now },
+// });
 
-const Response = mongoose.model("Response", ResponseSchema);
+// const Response = mongoose.model("Response", ResponseSchema);
 
-router.post("/saveResponses", async (req, res) => {
-  try {
-    const { userId, responses } = req.body;
-    const newResponse = new Response({ userId, responses });
-    await newResponse.save();
-    res.json({ message: "Responses saved!" });
-  } catch (error) {
-    res.status(500).json({ message: "Error saving responses" });
-  }
-});
+// router.post("/saveResponses", async (req, res) => {
+//   try {
+//     const { userId, responses } = req.body;
+//     const newResponse = new Response({ userId, responses });
+//     await newResponse.save();
+//     res.json({ message: "Responses saved!" });
+//   } catch (error) {
+//     res.status(500).json({ message: "Error saving responses" });
+//   }
+// });
 
-// Fetch past responses for a user
-router.get("/getResponses/:userId", async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const userResponses = await Response.find({ userId }).sort({ date: -1 }).limit(1);
-    if (userResponses.length > 0) {
-      res.json(userResponses[0].responses);
-    } else {
-      res.json([]);
-    }
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching responses" });
-  }
-});
+// // Fetch past responses for a user
+// router.get("/getResponses/:userId", async (req, res) => {
+//   try {
+//     const { userId } = req.params;
+//     const userResponses = await Response.find({ userId }).sort({ date: -1 }).limit(1);
+//     if (userResponses.length > 0) {
+//       res.json(userResponses[0].responses);
+//     } else {
+//       res.json([]);
+//     }
+//   } catch (error) {
+//     res.status(500).json({ message: "Error fetching responses" });
+//   }
+// });
 
 app.get('/', (req, res) => { // app.get() defines a route that listens for GET requests, '/' means the route is the root, (req, res) is a call back func that handles the request
   // A route in Express determines how the server responds when a user visits a specific URL.

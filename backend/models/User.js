@@ -5,6 +5,20 @@ const UserSchema = new mongoose.Schema({
     password: { type: String, required: true }, 
     firstName: { type: String, required: true}, 
     lastName: {type: String, required: true},
+    streakData: {
+      streak: {
+        type: Number,
+        default: 0
+      },
+      lastCompletionDate: {
+        type: Date,
+        default: null
+      }
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now
+    },
   });
 
   /*
