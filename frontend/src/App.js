@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Link, useNavigate} from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -8,6 +8,30 @@ import "./App.css";
 function AppContent() {
   const isLoggedIn = localStorage.getItem("token");
   const navigate = useNavigate();
+  const [smilestones, setsmilestones] = useState(0);
+
+
+  React.useEffect(() => {
+    const storedCoins = localStorage.getItem("smilestones");
+    if (storedCoins) {
+      setsmilestones(parseInt(storedCoins, 10));
+    }
+
+    const handleStorageChange = () => {
+      const updatedCoins = localStorage.getItem("smilestones");
+      if (updatedCoins) {
+        setsmilestones(parseInt(updatedCoins, 10));
+      }
+    };
+  
+    window.addEventListener("storage", handleStorageChange);
+
+
+  return () => {
+    window.removeEventListener("storage", handleStorageChange);
+  };
+
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -24,6 +48,9 @@ function AppContent() {
           </>
         ) : (
           <>
+          <span className="coin-display">
+            {smilestones || 0} SmileStones
+          </span>
             {/* <Link to="/dashboard">Dashboard</Link> |  */}
             <button onClick={handleLogout}>Logout</button>
           </>

@@ -35,6 +35,7 @@ router.get('/getResponses', async (req, res) => {
 // Save completion and update streak
 router.post('/saveResponses', async (req, res) => {
   try {
+    let coinsToAdd = 0;
     // Get user ID from authenticated request
     const userId = req.user.userId;
     
@@ -82,12 +83,37 @@ router.post('/saveResponses', async (req, res) => {
       user.streakData.lastCompletionDate = today;
       
       // Save user with updated streak data
+
+
+      // Reward coins based on streak
+      const currentStreak = user.streakData.streak;
+      coinsToAdd = 1; // 1 coin per day
+      if (currentStreak % 30 == 0){
+        coinsToAdd += 10; //10 coins every month, ineligible for the other 3 from every 10 days
+      }
+      else if (currentStreak % 10 == 0){
+        coinsToAdd += 3; //everytime the user reaches 10 days they get 3 points
+      }
+      user.smilestones = (user.smilestones || 0) + coinsToAdd;
+
+      // Save user with updated streak data and coins
       await user.save();
-    }
     
     // Return the current streak
-    console.log('Updated streak for user:', userId, 'Streak:', user.streakData.streak);
-    return res.json({ streak: user.streakData.streak });
+    console.log('Updated streak for user:', userId, 'Streak:', user.streakData.streak, 'Coins: ', user.smilestones);
+    return res.json({ 
+      streak: user.streakData.streak,
+      coinsAwarded: coinsToAdd,
+      smilestones: user.smilestones
+    });
+  }
+  else{
+    return res.json({ 
+      streak: user.streakData.streak,
+      coinsAwarded: 0,
+      smilestones: user.smilestones || 0
+    });
+  }
   } catch (error) {
     console.error('Error saving responses:', error);
     res.status(500).json({ message: 'Server error', error: error.message });

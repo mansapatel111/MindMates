@@ -7,6 +7,7 @@ function Login(){
     const [username, setUsername] = useState(''); //This is just initializes the variables to empty
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [smilestones, setsmilstones] = useState(0);
     const navigate = useNavigate();
 
     const handleLogin = async (event) => { //async functions allows us to write async code and use await
@@ -21,11 +22,15 @@ function Login(){
           });
     
           const data = await response.json(); //response comes from line 18, .json() converts it into a json like format
+
+          console.log("Login response data:", data);
           if (response.ok) { //.ok checks if the response code is between 200-299, anythin else means error
             setMessage(`Login successful!`);
             localStorage.setItem('token', data.token);
             localStorage.setItem('firstName', data.firstName);
             localStorage.setItem('lastName', data.lastName);
+            localStorage.setItem('smilestones', data.smilestones);
+            console.log("Smilestones in localStorage:", data.smilestones);
             navigate('/dashboard');
           } else {
             setMessage(data.message);

@@ -3,6 +3,7 @@ import Chatbot from "./Chatbot";
 
 function Dashboard() {
   const [userName, setUserName] = useState("");
+  const [smilestones, setSmilestones] = useState(0);
 
   useEffect(() => {
     // Fetch the user's name from localStorage

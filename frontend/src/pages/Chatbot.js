@@ -36,6 +36,9 @@ const Chatbot = () => {
         if (data && data.streak !== undefined) {
           setStreak(data.streak);
         }
+        if (data && data.smilestones !== undefined) {
+          localStorage.setItem('smilestones', data.smilestones);
+        }
       } catch (error) {
         console.error("Error fetching streak data:", error);
       }
