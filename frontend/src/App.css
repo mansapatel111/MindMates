@@ -272,3 +272,13 @@ button:active {
     padding: 1.5rem;
   }
 }
+
+.coin-display {
+  margin-right: 1rem;
+  color: white;
+  font-weight: bold;
+  background-color: #6a11cb;
+  padding: 0.3rem 0.7rem;
+  border-radius: 10px;
+  font-size: 1rem;
+}

@@ -40,6 +40,8 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ username });
     if (!user) return res.status(400).json({ message: "Invalid credentials (NO USERNAME EXISTS)" });
 
+    console.log("User smilestones:", user.smilestones);
+
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials (USERNAME FOUND, WRONG PASSWORD" });
@@ -51,7 +53,7 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.json({ token, firstName: user.firstName, lastName: user.lastName }); //this is sending the token to the front end
+    res.json({ token, firstName: user.firstName, lastName: user.lastName, smilestones: user.smilestones || 0}); //this is sending the token to the front end
     } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message});
   }
