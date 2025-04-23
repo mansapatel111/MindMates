@@ -1,67 +1,49 @@
-Instructions to download dependencies
 
+🧠 MindMates
+MindMates is a gamified mindfulness and gratitude web app built with the MERN stack (MongoDB, Express.js, React, Node.js). It offers a supportive, chatbot-driven experience to help users build healthy mental habits through daily prompts, milestone rewards, and streak tracking.
 
-Step 1: Install Node.js and npm
-Download and install Node.js from nodejs.org.
-Verify the installation
-node -v
-npm -v
+🌐 This is our GitHub Repo
 
-Step 2: Set Up the Backend (Node.js + Express)
-Create a new directory for your project and navigate into it:
-mkdir mern-app
-cd mern-app
+✨ Features
+💬 Interactive Chatbot: Unique daily mindfulness and gratitude prompts
 
-Initialize a new Node.js project:
-npm init -y
-Install Express and other dependencies:
-npm install express mongoose cors
-Create the main server file (server.js):
-touch server.js
+🎯 Streak Tracking: Encourages consistency through daily participation
 
-If you don't have MongoDB installed, follow the instructions on mongodb.com to install it.
-Start the MongoDB server:
-mongod
-Create a .env file in the root of your project to store environment variables:
-touch .env
-Add your MongoDB connection string to the .env file:
-Create a new React application inside your project directory:
-npx create-react-app client
-Navigate into the React application directory:
-cd client
-Start the React development server:
-npm start
+🏆 Smilestones: Earn in-game currency as rewards for continued use
 
+🔐 User Authentication: Secure login and encrypted password storage
 
-Install Axios in the React application:
-npm install axios
-Create a proxy in client/package.json to forward requests to the Express server:
-"proxy": "http://localhost:5000"
-Create a new file client/src/api.js and add the following code to make API requests:
-import axios from 'axios';
-const API = axios.create({ baseURL: 'http://localhost:5000' });
-export const fetchHelloWorld = () => API.get('/');
-Use the API in a React component, for example in client/src/App.js:
-import React, { useEffect, useState } from 'react';
-import { fetchHelloWorld } from './api';
-function App() {
-  const [message, setMessage] = useState('');
-  useEffect(() => {
-    fetchHelloWorld().then(response => {
-      setMessage(response.data);
-    });
-  }, []);
-  return (
-    <div className="App">
-      <h1>{message}</h1>
-    </div>
-  );
-}
-export default App;
+🛠 Installation
+Install Node.js and MongoDB
 
+Clone the repo:
+git clone https://github.com/mansapatel111/MindMates
+cd MindMates
+Set up .env files in both frontend/ and backend/ directories using the provided dotenv.txt templates.
 
-Start the Express server:
-node server.js
-Start the React development server (in a separate terminal):
-cd client
-npm start
+For backend: Add your JWT_SECRET and MONGO_URI
+
+In two separate terminals:
+
+cd backend && npm install && npm start
+cd frontend && npm install && npm start
+
+🔍 Testing & Quality
+✅ Manual testing for UI and chatbot prompts
+
+🔄 Version control with Git and GitHub PRs
+
+🧪 Static analysis via SonarQube for code quality and security
+
+🛡 Software Qualities
+
+Usable: Friendly chatbot interface for easy engagement
+
+Secure: Password encryption & JWT-based auth
+
+Reliable: Input validation, consistent schemas
+
+Performant: Responsive frontend, optimized DB access
+
+💫 Built by Amanda Tantalean, Mansa Patel, and Esmil Canet
+Group 04 | Final Project
