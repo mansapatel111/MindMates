@@ -31,7 +31,7 @@ router.post('/register', async (req, res) => {
 });
 
 
-// User login route
+// User login route for the frontend
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
